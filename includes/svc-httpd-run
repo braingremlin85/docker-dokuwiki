@@ -1,0 +1,3 @@
+#!/command/execlineb -P
+
+/usr/sbin/httpd -D FOREGROUND

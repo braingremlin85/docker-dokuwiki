@@ -1,0 +1,17 @@
+services:
+  dokuwiki-alpine:
+    container_name: dokuwiki-alpine
+    image: braingremlin/alpine-php-apache:fpm82_x86_64_1.3
+    restart: unless-stopped
+    ports:
+      - '8888:80' # la porta definita nel Dockerfile
+    volumes:
+      - '/volume1/docker/dokuwiki/html:/var/www/localhost/htdocs'
+      - '/volume1/docker/dokuwiki/backup:/home/backup'
+     # if you need to customize php.ini settings    
+     #- '/volume1/docker/dokuwiki/php/php.ini:/usr/local/etc/php/php.ini'
+
+    environment:
+      - PUID=1048 # user running service
+      - PGID=100  # group running serivice
+      - TZ=Europe/Zurich

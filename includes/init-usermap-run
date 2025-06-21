@@ -1,0 +1,12 @@
+#!/usr/bin/with-contenv bash
+# shellcheck shell=bash
+
+PUID=${PUID:-100}
+PGID=${PGID:-101}
+
+groupmod -o -g "${PGID}" apache
+usermod -o -u "${PUID}" apache
+
+# permission to /tmp for php sessions
+chown apache:apache /tmp
+chmod 700 /tmp
