@@ -1,8 +1,8 @@
 FROM alpine:latest
 
-ENV PHP_VERSION=82
-ARG S6_OVERLAY_VERSION=3.2.1.0
-ARG INCLUDES_BASEURL=https://raw.githubusercontent.com/braingremlin85/docker-dokuwiki/master/includes/
+ENV PHP_VERSION="82"
+ARG S6_OVERLAY_VERSION="3.2.1.0"
+ARG INCLUDES_BASEURL="https://raw.githubusercontent.com/braingremlin85/docker-dokuwiki/master/includes/"
 
 #ARG ARCH=x86_64
 #ARG ARCH=aarch64
