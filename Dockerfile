@@ -7,10 +7,8 @@ ARG INCLUDES_BASEURL="https://raw.githubusercontent.com/braingremlin85/docker-do
 #ARG ARCH=x86_64
 #ARG ARCH=aarch64
 
-# autodetect
+# from build argument
 ARG ARCH
-RUN ARCH=$(uname -m) 
-
 
 RUN apk update && apk upgrade
 
