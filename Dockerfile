@@ -68,12 +68,13 @@ RUN chmod +x /etc/s6-overlay/s6-rc.d/svc-php-fpm/run
 
 
 RUN	mkdir /etc/s6-overlay/s6-rc.d/init-usermap/dependencies.d && touch /etc/s6-overlay/s6-rc.d/init-usermap/dependencies.d/base && \
+	mkdir /etc/s6-overlay/s6-rc.d/set-timezone/dependencies.d && touch /etc/s6-overlay/s6-rc.d/set-timezone/dependencies.d/base && \
 	mkdir /etc/s6-overlay/s6-rc.d/svc-httpd/dependencies.d && touch /etc/s6-overlay/s6-rc.d/svc-httpd/dependencies.d/init-usermap && \
 	mkdir /etc/s6-overlay/s6-rc.d/svc-php-fpm/dependencies.d && touch /etc/s6-overlay/s6-rc.d/svc-php-fpm/dependencies.d/svc-httpd
 
 # register S6 services tu run
 RUN	touch /etc/s6-overlay/s6-rc.d/user/contents.d/init-usermap && \	
-RUN	touch /etc/s6-overlay/s6-rc.d/user/contents.d/set-timezone && \	
+	touch /etc/s6-overlay/s6-rc.d/user/contents.d/set-timezone && \	
 	touch /etc/s6-overlay/s6-rc.d/user/contents.d/svc-httpd && \
 	touch /etc/s6-overlay/s6-rc.d/user/contents.d/svc-php-fpm
 	
