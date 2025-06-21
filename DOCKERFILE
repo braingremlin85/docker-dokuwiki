@@ -6,6 +6,7 @@ INCLUDES_BASEURL=https://raw.githubusercontent.com/braingremlin85/docker-dokuwik
 
 #ARG ARCH=x86_64
 #ARG ARCH=aarch64
+
 ARG ARCH=$(uname -m) # autodetect
 
 
