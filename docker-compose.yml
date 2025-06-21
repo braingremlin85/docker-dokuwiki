@@ -10,7 +10,9 @@ services:
       - '/volume1/docker/dokuwiki/backup:/home/backup'
      # if you need to customize php.ini settings    
      #- '/volume1/docker/dokuwiki/php/php.ini:/usr/local/etc/php/php.ini'
-
+    env_file:
+      - path: ./stack.env
+        required: false # default
     environment:
       - PUID
       - PGID
