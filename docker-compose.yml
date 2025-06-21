@@ -1,6 +1,6 @@
 services:
   dokuwiki-alpine:
-    container_name: dokuwiki-alpine
+    container_name: dokuwiki
     image: braingremlin/alpine-php-apache:fpm82_x86_64_1.3
     restart: unless-stopped
     ports:
