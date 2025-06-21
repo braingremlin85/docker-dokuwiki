@@ -12,8 +12,4 @@ services:
      #- '/volume1/docker/dokuwiki/php/php.ini:/usr/local/etc/php/php.ini'
     env_file:
       - path: ./stack.env
-        required: false # default
-    environment:
-      - PUID
-      - PGID
-      - TZ
+        required: true # default
