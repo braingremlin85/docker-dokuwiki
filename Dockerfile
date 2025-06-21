@@ -50,17 +50,17 @@ RUN tar -C / -Jxpf /tmp/s6-overlay-symlinks-arch.tar.xz
 
 RUN rm -rf /tmp/*
 
-ADD {$INCLUDES_BASEURL}init-usermap-up /etc/s6-overlay/s6-rc.d/init-usermap/up
-ADD {$INCLUDES_BASEURL}init-usermap-type /etc/s6-overlay/s6-rc.d/init-usermap/type
-ADD {$INCLUDES_BASEURL}init-usermap-run /etc/s6-overlay/s6-rc.d/init-usermap/run
+ADD ${INCLUDES_BASEURL}init-usermap-type /etc/s6-overlay/s6-rc.d/init-usermap/type
+ADD ${INCLUDES_BASEURL}init-usermap-up /etc/s6-overlay/s6-rc.d/init-usermap/up
+ADD ${INCLUDES_BASEURL}init-usermap-run /etc/s6-overlay/s6-rc.d/init-usermap/run
 RUN chmod +x /etc/s6-overlay/s6-rc.d/init-usermap/run
 
-ADD {$INCLUDES_BASEURL}svc-httpd-type /etc/s6-overlay/s6-rc.d/svc-httpd/type
-ADD {$INCLUDES_BASEURL}svc-httpd-run /etc/s6-overlay/s6-rc.d/svc-httpd/run
+ADD ${INCLUDES_BASEURL}svc-httpd-type /etc/s6-overlay/s6-rc.d/svc-httpd/type
+ADD ${INCLUDES_BASEURL}svc-httpd-run /etc/s6-overlay/s6-rc.d/svc-httpd/run
 RUN chmod +x /etc/s6-overlay/s6-rc.d/svc-httpd/run
 
-ADD {$INCLUDES_BASEURL}svc-php-fpm-type /etc/s6-overlay/s6-rc.d/svc-php-fpm/type
-ADD {$INCLUDES_BASEURL}svc-php-fpm-run /etc/s6-overlay/s6-rc.d/svc-php-fpm/run
+ADD ${INCLUDES_BASEURL}svc-php-fpm-type /etc/s6-overlay/s6-rc.d/svc-php-fpm/type
+ADD ${INCLUDES_BASEURL}svc-php-fpm-run /etc/s6-overlay/s6-rc.d/svc-php-fpm/run
 RUN chmod +x /etc/s6-overlay/s6-rc.d/svc-php-fpm/run
 
 RUN	mkdir /etc/s6-overlay/s6-rc.d/init-usermap/dependencies.d && touch /etc/s6-overlay/s6-rc.d/init-usermap/dependencies.d/base && \
@@ -70,13 +70,13 @@ RUN	mkdir /etc/s6-overlay/s6-rc.d/init-usermap/dependencies.d && touch /etc/s6-o
 	touch /etc/s6-overlay/s6-rc.d/user/contents.d/svc-httpd && \
 	touch /etc/s6-overlay/s6-rc.d/user/contents.d/svc-php-fpm
 	
-ADD {$INCLUDES_BASEURL}httpd.conf /etc/apache2/httpd.conf
+ADD ${INCLUDES_BASEURL}httpd.conf /etc/apache2/httpd.conf
 
-ADD {$INCLUDES_BASEURL}www.conf /etc/php${PHP_VERSION}/php-fpm.d/www.conf
+ADD ${INCLUDES_BASEURL}www.conf /etc/php${PHP_VERSION}/php-fpm.d/www.conf
 
-ADD {$INCLUDES_BASEURL}php.ini /usr/local/etc/php/php.ini
+ADD ${INCLUDES_BASEURL}php.ini /usr/local/etc/php/php.ini
 
-ADD {$INCLUDES_BASEURL}dokuwiki_update.sh /usr/local/bin/dokuwiki_update.sh
+ADD ${INCLUDES_BASEURL}dokuwiki_update.sh /usr/local/bin/dokuwiki_update.sh
 RUN chmod +x /usr/local/bin/dokuwiki_update.sh
 
 ENTRYPOINT ["/init"]
