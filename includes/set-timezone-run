@@ -1,0 +1,6 @@
+#!/usr/bin/with-contenv bash
+# shellcheck shell=bash
+
+TZ=${TZ:-UTC}
+
+ln -s /usr/share/zoneinfo/${TZ} /etc/localtime
