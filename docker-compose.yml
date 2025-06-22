@@ -5,17 +5,18 @@ services:
     restart: unless-stopped
     ports:
       - ${EXTERNAL_PORT:-8888}:80 # la porta definita nel Dockerfile
+    env_file:
+      - stack.env      
     volumes:
       #- data:/var/www/localhost/htdocs
       #- backup:/home/backup
-      - ${DATA_VOLUME}:/var/www/localhost/htdocs
-      - ${BACKUP_VOLUME}:/home/backup
+      - ${DATA_VOLUME:-data}:/var/www/localhost/htdocs
+      - ${BACKUP_VOLUME:-backup}:/home/backup
       #- /volume1/docker/dokuwiki/html:/var/www/localhost/htdocs
       #- /volume1/docker/dokuwiki/backup:/home/backup
      # if you need to customize php.ini settings    
      #- /volume1/docker/dokuwiki/php/php.ini:/usr/local/etc/php/php.ini
-    env_file:
-      - stack.env
+
         
 volumes:
   data:
