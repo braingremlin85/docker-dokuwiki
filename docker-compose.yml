@@ -4,7 +4,7 @@ services:
     image: braingremlin/alpine-php-apache:1.5
     restart: unless-stopped
     ports:
-      - '8888:80' # la porta definita nel Dockerfile
+      - ${EXTERNAL_PORT:-8888}:80 # la porta definita nel Dockerfile
     volumes:
       #- data:/var/www/localhost/htdocs
       #- backup:/home/backup
