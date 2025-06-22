@@ -6,10 +6,12 @@ services:
     ports:
       - '8888:80' # la porta definita nel Dockerfile
     volumes:
-      - '/volume1/docker/dokuwiki/html:/var/www/localhost/htdocs'
-      - '/volume1/docker/dokuwiki/backup:/home/backup'
+      - data:/var/www/localhost/htdocs
+      - backup:/home/backup
+      #- /volume1/docker/dokuwiki/html:/var/www/localhost/htdocs
+      #- /volume1/docker/dokuwiki/backup:/home/backup
      # if you need to customize php.ini settings    
-     #- '/volume1/docker/dokuwiki/php/php.ini:/usr/local/etc/php/php.ini'
+     #- /volume1/docker/dokuwiki/php/php.ini:/usr/local/etc/php/php.ini
     env_file:
       - path: stack.env
         required: true
