@@ -1,4 +1,4 @@
-FROM alpine:latest as base
+FROM alpine:latest AS base
 
 # arm64-specific stage
 FROM base AS build-arm64
