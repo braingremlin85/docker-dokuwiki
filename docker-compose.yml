@@ -6,8 +6,10 @@ services:
     ports:
       - '8888:80' # la porta definita nel Dockerfile
     volumes:
-      - data:/var/www/localhost/htdocs
-      - backup:/home/backup
+      #- data:/var/www/localhost/htdocs
+      #- backup:/home/backup
+      - ${DATA_VOLUME:-data}:/var/www/localhost/htdocs
+      - ${BACKUP_VOLUME:-backup}:/home/backup
       #- /volume1/docker/dokuwiki/html:/var/www/localhost/htdocs
       #- /volume1/docker/dokuwiki/backup:/home/backup
      # if you need to customize php.ini settings    
