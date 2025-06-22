@@ -8,11 +8,13 @@ ARG ARCH=aarch64
 FROM base AS build-amd64
 ARG ARCH=x86_64
 
+FROM build-${TARGETARCH} AS build
+
 ENV PHP_VERSION="82"
 ARG S6_OVERLAY_VERSION="3.2.1.0"
 ARG INCLUDES_BASEURL="https://raw.githubusercontent.com/braingremlin85/docker-dokuwiki/master/includes/"
 
-FROM build-${TARGETARCH} AS build
+
 
 RUN apk update && apk upgrade
 
