@@ -17,3 +17,7 @@ services:
     env_file:
       - path: stack.env
         required: true
+        
+volumes:
+  data:
+  backup:
