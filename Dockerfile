@@ -1,3 +1,6 @@
+# This is a Dockerfile intended to be built using `docker buildx`
+# for multi-arch support. Building with `docker build` may have unexpected results.
+
 FROM alpine:latest AS base
 
 # arm64-specific stage
