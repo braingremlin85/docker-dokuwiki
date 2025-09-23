@@ -3,6 +3,8 @@ services:
     container_name: dokuwiki
     image: braingremlin/alpine-php-apache:latest
     restart: unless-stopped
+    networks:
+      npm-bridge:
     ports:
       - ${EXTERNAL_PORT:-8888}:80 # la porta definita nel Dockerfile
     volumes:
@@ -19,6 +21,9 @@ services:
     env_file:
       - stack.env      
 
+networks:
+  npm-bridge:
+    external: true
         
 volumes:
   data:
