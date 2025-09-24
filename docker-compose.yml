@@ -11,6 +11,7 @@ services:
       #- data:/var/www/localhost/htdocs
       #- backup:/home/backup
       - ${DATA_VOLUME:-data}:/var/www/localhost/htdocs/data
+      - ${CONF_VOLUME:-conf}:/var/www/localhost/htdocs/conf
       - ${BACKUP_VOLUME:-backup}:/home/backup
       #- /volume1/docker/dokuwiki/html:/var/www/localhost/htdocs
       #- /volume1/docker/dokuwiki/backup:/home/backup
@@ -28,3 +29,4 @@ networks:
 volumes:
   data:
   backup:
+  conf:
