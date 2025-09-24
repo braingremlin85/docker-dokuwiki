@@ -4,6 +4,8 @@ minimal alpine based image with apache2 and php-fpm82 with dokuwiki pre-installe
 
 .env file get bypassed by manually set environment variables from portainer gui
 
+Docker Hub: https://hub.docker.com/r/braingremlin/dokuwiki
+
 
 ## Build #
 
