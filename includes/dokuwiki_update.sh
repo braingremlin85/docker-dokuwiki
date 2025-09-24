@@ -31,7 +31,7 @@ show_help() {
     echo -e "  --silent, -s   Install without asking for confirmation"
     echo -e "  --help         Display this help message."
     echo -e "${BOLD}Description:${RESET}"
-    echo -e "  This script updates/install DokuWiki to the latest stable version."
+    echo -e "  This script updates/install latest version of DokuWiki."
     echo -e "  Use -s for automated silent install"
     exit 0
 }
@@ -99,7 +99,7 @@ echo "Download successful :)"
 
 
 # Unpack tarball
-tar zxvf dokuwiki-stable.tgz
+tar zxvf dokuwiki-stable.tgz # TODO --strip-components=1
 echo "Extraction complete!"
 
 # Identify the correct unpacked directory

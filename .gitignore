@@ -1,6 +1,6 @@
 TODO
 
-*.kate-swp # kate tmp files
+*.kate-swp
 *.bak
 *.old
 

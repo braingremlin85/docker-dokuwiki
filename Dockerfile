@@ -96,7 +96,7 @@ RUN chmod +x /usr/local/bin/dokuwiki_update.sh
 
 
 ADD https://download.dokuwiki.org/src/dokuwiki/dokuwiki-stable.tgz /tmp
-RUN tar -C /var/www/localhost/htdocs -zxpf /tmp/dokuwiki-stable.tgz
+RUN tar --strip-components=1  -C /var/www/localhost/htdocs -zxpf /tmp/dokuwiki-stable.tgz
 
 RUN rm -rf /tmp/*
 
