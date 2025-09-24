@@ -1,16 +1,16 @@
 services:
   dokuwiki-alpine:
     container_name: dokuwiki
-    image: braingremlin/alpine-php-apache:latest
+    image: braingremlin/dokuwiki:latest
     restart: unless-stopped
     networks:
       - npm-bridge
     ports:
-      - ${EXTERNAL_PORT:-8888}:80 # la porta definita nel Dockerfile
+      - ${EXTERNAL_PORT:-8888}:80 # EXPORTED port from Dockerfile
     volumes:
       #- data:/var/www/localhost/htdocs
       #- backup:/home/backup
-      - ${DATA_VOLUME:-data}:/var/www/localhost/htdocs
+      - ${DATA_VOLUME:-data}:/var/www/localhost/htdocs/data
       - ${BACKUP_VOLUME:-backup}:/home/backup
       #- /volume1/docker/dokuwiki/html:/var/www/localhost/htdocs
       #- /volume1/docker/dokuwiki/backup:/home/backup

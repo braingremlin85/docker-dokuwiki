@@ -8,4 +8,3 @@ dokuwiki itself don't get installed automatically with the image but need to be 
 ```bash
 dokuwiki_update.sh
 ```
-

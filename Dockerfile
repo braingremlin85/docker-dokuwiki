@@ -55,8 +55,6 @@ RUN tar -C / -Jxpf /tmp/s6-overlay-symlinks-noarch.tar.xz
 ADD https://github.com/just-containers/s6-overlay/releases/download/v${S6_OVERLAY_VERSION}/s6-overlay-symlinks-arch.tar.xz /tmp
 RUN tar -C / -Jxpf /tmp/s6-overlay-symlinks-arch.tar.xz
 
-RUN rm -rf /tmp/*
-
 ADD ${INCLUDES_BASEURL}init-usermap-type /etc/s6-overlay/s6-rc.d/init-usermap/type
 ADD ${INCLUDES_BASEURL}init-usermap-up /etc/s6-overlay/s6-rc.d/init-usermap/up
 ADD ${INCLUDES_BASEURL}init-usermap-run /etc/s6-overlay/s6-rc.d/init-usermap/run
@@ -95,6 +93,12 @@ ADD ${INCLUDES_BASEURL}php.ini /usr/local/etc/php/php.ini
 
 ADD ${INCLUDES_BASEURL}dokuwiki_update.sh /usr/local/bin/dokuwiki_update.sh
 RUN chmod +x /usr/local/bin/dokuwiki_update.sh
+
+
+ADD https://download.dokuwiki.org/src/dokuwiki/dokuwiki-stable.tgz /tmp
+RUN tar -C /var/www/localhost/htdocs -zxpf /tmp/dokuwiki-stable.tgz
+
+RUN rm -rf /tmp/*
 
 ENTRYPOINT ["/init"]
 
