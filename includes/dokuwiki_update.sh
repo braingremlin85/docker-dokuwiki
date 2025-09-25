@@ -12,8 +12,6 @@ BACKUP_DIR="/home/dokuwiki-backup"
 PUID=${PUID:-100} # apache user
 PGID=${PGID:-101} # apache group
 
-DOKUWIKI_DIR="$HOME/tmp" # alpine
-
 DOWNLOAD_URL="https://download.dokuwiki.org/src/dokuwiki/dokuwiki-stable.tgz"
 
 # Define color codes
@@ -28,6 +26,7 @@ show_help() {
     echo -e "${BOLD}Usage:${RESET} $0 [OPTIONS]"
     echo -e "${BOLD}Options:${RESET}"
     echo -e "  --no-backup    Do not create a backup before updating."
+    echo -e "  --install, -i   Install only, no update"
     echo -e "  --silent, -s   Install without asking for confirmation"
     echo -e "  --help         Display this help message."
     echo -e "${BOLD}Description:${RESET}"
@@ -36,10 +35,19 @@ show_help() {
     exit 0
 }
 
-cd $HOME
+echo "Checking if backup directory exist..."
+if [ ! -d "$BACKUP_DIR" ]; then
+    echo "...it doesn't exist, let's create it"
+    mkdir -p "$BACKUP_DIR"
+else
+    echo "...yes!"
+fi
+
+cd /tmp
 
 nobackup=false
 silent=false
+install=false
 for arg in "$@"; do
     case "$arg" in
         --no-backup)
@@ -47,6 +55,9 @@ for arg in "$@"; do
             ;;
         --silent | -s)
             silent=true
+            ;;
+        --install | -i)
+            install=true
             ;;
         --help)
             show_help
@@ -59,6 +70,10 @@ if [ -f "$DOKUWIKI_DIR/VERSION" ]; then
     echo "Current DokuWiki version:"
     version=$(cat "$DOKUWIKI_DIR/VERSION")
     echo -e ${GREEN}${version}${RESET}
+    if [ "$install" = true ]; then
+        echo "Dokuwiki already installed"
+        exit 0
+    fi
 else
     nobackup=true
     if [ "$silent" = false ]; then
@@ -69,7 +84,7 @@ else
             echo "Proceeding with installation..."
         else
             echo "Exiting..."
-            exit 1
+            exit 0
         fi
     fi
 fi
@@ -89,17 +104,20 @@ if [ "$nobackup" = false ]; then
     # 3. Make a backup file
     backup_file="$BACKUP_DIR/dokuwiki-backup-$(date +%Y-%m-%d).tar.gz"
     echo "Let's backup!"
-    tar -czvf "$backup_file" "$DOKUWIKI_DIR"
+    tar -czf "$backup_file" "$DOKUWIKI_DIR"
     echo "Backup successful: '$backup_file' created"
 fi
 
 # Download current stable release
-wget "$DOWNLOAD_URL" || exit 1
+#wget -N "$DOWNLOAD_URL" || exit 1
+curl -O "$DOWNLOAD_URL" || exit 1
 echo "Download successful :)"
 
 
 # Unpack tarball
-tar zxvf dokuwiki-stable.tgz # TODO --strip-components=1
+
+
+tar zxf dokuwiki-stable.tgz # TODO --strip-components=1
 echo "Extraction complete!"
 
 # Identify the correct unpacked directory
@@ -113,7 +131,7 @@ if [ -d "$unpacked_dir" ]; then
     if [ "$version" = "$new_version" ]; then
         echo "Latest version already installed!"
         # TODO reinstall
-        exit 1
+        exit 0
     else
         # Copy files to /var/www/dokuwiki/
         cp -af "$unpacked_dir"/* "$DOKUWIKI_DIR/"
@@ -126,7 +144,7 @@ else
 fi
 
 # Change ownership of $DOKUWIKI_DIR
-#chown -R $PUID:$PGID "$DOKUWIKI_DIR" || echo "Error: can't set ownership of \"$DOKUWIKI_DIR\" for PUID=$PUID GUID=$PGID"; exit 1
+chown -R $PUID:$PGID "$DOKUWIKI_DIR" || echo "Error: can't set ownership of \"$DOKUWIKI_DIR\" for PUID=$PUID GUID=$PGID"; exit 1
 
 #% Remove tarball and unpacked directory
 rm dokuwiki-stable.tgz || exit 1

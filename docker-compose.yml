@@ -8,15 +8,10 @@ services:
     ports:
       - ${EXTERNAL_PORT:-8888}:80 # EXPORTED port from Dockerfile
     volumes:
-      #- data:/var/www/localhost/htdocs
-      #- backup:/home/backup
-      - ${DATA_VOLUME:-data}:/var/www/localhost/htdocs/data
-      - ${CONF_VOLUME:-conf}:/var/www/localhost/htdocs/conf
-      - ${BACKUP_VOLUME:-backup}:/home/backup
-      #- /volume1/docker/dokuwiki/html:/var/www/localhost/htdocs
-      #- /volume1/docker/dokuwiki/backup:/home/backup
-     # if you need to customize php.ini settings    
-     #- /volume1/docker/dokuwiki/php/php.ini:/usr/local/etc/php/php.ini
+      - ${HTML_VOLUME:-html}:/var/www/localhost/htdocs/
+      #- ${BACKUP_VOLUME:-backup}:/home/backup
+      # if you need to customize php.ini settings
+      #- /volume1/docker/dokuwiki/php/php.ini:/usr/local/etc/php/php.ini
     security_opt:
       - no-new-privileges:true
     env_file:
@@ -27,6 +22,5 @@ networks:
     name: npm_bridge
         
 volumes:
-  data:
+  html:
   backup:
-  conf:

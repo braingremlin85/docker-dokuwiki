@@ -2,6 +2,7 @@
 # for multi-arch support. Building with `docker build` may have unexpected results.
 
 FROM alpine:latest AS base
+#FROM braingremlin/apache2-php82-fpm:latest as base
 
 # arm64-specific stage
 FROM base AS build-arm64
@@ -19,7 +20,7 @@ ARG INCLUDES_BASEURL="https://raw.githubusercontent.com/braingremlin85/docker-do
 
 
 
-RUN apk update && apk upgrade
+RUN apk update && apk upgrade --------------------------------------------------------
 
 RUN apk add --no-cache shadow bash curl tzdata
 
@@ -74,8 +75,19 @@ ADD ${INCLUDES_BASEURL}svc-php-fpm-run /etc/s6-overlay/s6-rc.d/svc-php-fpm/run
 RUN chmod +x /etc/s6-overlay/s6-rc.d/svc-php-fpm/run
 
 
+
+ADD includes/install-dokuwiki-type /etc/s6-overlay/s6-rc.d/install-dokuwiki/type
+ADD includes/install-dokuwiki-up /etc/s6-overlay/s6-rc.d/install-dokuwiki/up
+ADD includes/install-dokuwiki-run /etc/s6-overlay/s6-rc.d/install-dokuwiki/run
+RUN chmod +x /etc/s6-overlay/s6-rc.d/install-dokuwiki/run
+
+
+RUN mkdir /etc/s6-overlay/s6-rc.d/install-dokuwiki/dependencies.d && touch /etc/s6-overlay/s6-rc.d/install-dokuwiki/dependencies.d/init-usermap
+RUN	touch /etc/s6-overlay/s6-rc.d/user/contents.d/install-dokuwiki
+
 RUN	mkdir /etc/s6-overlay/s6-rc.d/init-usermap/dependencies.d && touch /etc/s6-overlay/s6-rc.d/init-usermap/dependencies.d/base && \
 	mkdir /etc/s6-overlay/s6-rc.d/set-timezone/dependencies.d && touch /etc/s6-overlay/s6-rc.d/set-timezone/dependencies.d/base && \
+	# depend on install-dokuwii???
 	mkdir /etc/s6-overlay/s6-rc.d/svc-httpd/dependencies.d && touch /etc/s6-overlay/s6-rc.d/svc-httpd/dependencies.d/init-usermap && \
 	mkdir /etc/s6-overlay/s6-rc.d/svc-php-fpm/dependencies.d && touch /etc/s6-overlay/s6-rc.d/svc-php-fpm/dependencies.d/svc-httpd
 
@@ -93,10 +105,6 @@ ADD ${INCLUDES_BASEURL}php.ini /usr/local/etc/php/php.ini
 
 ADD ${INCLUDES_BASEURL}dokuwiki_update.sh /usr/local/bin/dokuwiki_update.sh
 RUN chmod +x /usr/local/bin/dokuwiki_update.sh
-
-
-ADD https://download.dokuwiki.org/src/dokuwiki/dokuwiki-stable.tgz /tmp
-RUN tar --strip-components=1  -C /var/www/localhost/htdocs -zxpf /tmp/dokuwiki-stable.tgz
 
 RUN rm -rf /tmp/*
 
