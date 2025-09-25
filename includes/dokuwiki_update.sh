@@ -35,19 +35,13 @@ show_help() {
     exit 0
 }
 
-echo "Checking if backup directory exist..."
-if [ ! -d "$BACKUP_DIR" ]; then
-    echo "...it doesn't exist, let's create it"
-    mkdir -p "$BACKUP_DIR"
-else
-    echo "...yes!"
-fi
 
 cd /tmp
 
 nobackup=false
 silent=false
 install=false
+
 for arg in "$@"; do
     case "$arg" in
         --no-backup)
@@ -58,12 +52,16 @@ for arg in "$@"; do
             ;;
         --install | -i)
             install=true
+            nobackup=true
             ;;
         --help)
             show_help
             ;;
     esac
 done
+
+
+echo "----$nobackup"
 
 # Show current DokuWiki version
 if [ -f "$DOKUWIKI_DIR/VERSION" ]; then
@@ -88,6 +86,7 @@ else
         fi
     fi
 fi
+
 
 
 # Backup existing version
