@@ -20,7 +20,7 @@ ARG INCLUDES_BASEURL="https://raw.githubusercontent.com/braingremlin85/docker-do
 
 
 
-RUN apk update && apk upgrade --------------------------------------------------------
+RUN apk update && apk upgrade
 
 RUN apk add --no-cache shadow bash curl tzdata
 
